@@ -32,12 +32,6 @@ jobs:
           service_account_email: ${{ secrets.GCP_EMAIL }}
           service_account_key: ${{ secrets.GCP_CREDENTIALS }}
 
-      # - name: Enable the necessary APIs and enable docker auth
-      #   run: |-
-      #     gcloud services enable containerregistry.googleapis.com
-      #     gcloud services enable run.googleapis.com
-      #     gcloud --quiet auth configure-docker
-
       - name: Configure docker auth
         run: gcloud auth configure-docker --quiet
 
@@ -45,7 +39,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build and tag image
-        run: docker build . --tag $IMAGE_NAME
+        run: docker build . -t $IMAGE_NAME
 
       - name: Push image to GCR
         run: docker push $IMAGE_NAME
