@@ -24,7 +24,6 @@ jobs:
 
   build-and-deploy:
     name: Build and Deploy
-    needs: integration
     runs-on: ubuntu-20.04
     steps:
       - name: Login
