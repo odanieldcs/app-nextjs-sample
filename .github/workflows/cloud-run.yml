@@ -8,7 +8,7 @@ on:
 
 env:
   CLOUD_RUN_REGION: ${{ secrets.GCP_REGION }}
-  IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}:$GITHUB_SHA
+  IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}
 
 jobs:
   # tests:
