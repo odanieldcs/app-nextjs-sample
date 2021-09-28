@@ -8,8 +8,7 @@ on:
 
 env:
   CLOUD_RUN_REGION: ${{ secrets.GCP_REGION }}
-  CLOUD_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-  IMAGE_NAME: gcr.io/$CLOUD_PROJECT_ID/${{ secrets.GCP_APP_NAME }}:$GITHUB_SHA
+  IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}:$GITHUB_SHA
 
 jobs:
   # tests:
@@ -27,9 +26,9 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Login
-        uses: google-github-actions/setup-gcloud@v0.2.0
+        uses: google-github-actions/setup-gcloud@master
         with:
-          project_id: $CLOUD_PROJECT_ID
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
           service_account_email: ${{ secrets.GCP_EMAIL }}
           service_account_key: ${{ secrets.GCP_CREDENTIALS }}
 
@@ -52,4 +51,4 @@ jobs:
         run: docker push $IMAGE_NAME
 
       - name: Deploy
-        run: gcloud run deploy $CLOUD_PROJECT_ID --image $IMAGE_NAME --region $GCP_REGION --platform managed
+        run: gcloud run deploy ${{ secrets.GCP_PROJECT_ID }} --image $IMAGE_NAME --region $CLOUD_RUN_REGION --platform managed
